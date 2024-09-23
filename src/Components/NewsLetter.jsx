@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+
 import subscribebg from "../Images/subscribe-bg.png";
+import { useNavigate } from "react-router";
 
 const NewsLetter = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAckModalOpen, setIsAckModalOpen] = useState(false); // Acknowledgement modal state
   const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [isPrivacyOpen, setIsPrivacyOpen] = useState(false);
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
@@ -11,11 +14,11 @@ const NewsLetter = () => {
   const [mobileError, setMobileError] = useState(""); // Error message for mobile
   const [email, setEmail] = useState(""); // Email state
   const [mobile, setMobile] = useState(""); // Mobile state
+  const navigate = useNavigate(); // For redirecting to home
 
   // Regular expression patterns for validation
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const mobilePattern = /^[0-9]{10}$/;
-
   const handleCheckboxChange = () => {
     setIsCheckboxChecked(!isCheckboxChecked);
     setErrorMessage(""); // Clear error message when checkbox is checked
@@ -53,14 +56,21 @@ const NewsLetter = () => {
     }
 
     // Handle successful subscription logic here
+    // Successful subscription: Close modal and open acknowledgement
     setIsModalOpen(false);
-    alert("Subscribed successfully!");
+    setIsAckModalOpen(true);
+    // alert("Subscribed successfully!");
   };
 
+  const handleBackToHomeClick = () => {
+    setIsAckModalOpen(false); // Close acknowledgement modal
+    setIsModalOpen(false);
+    navigate("/"); // Redirect to home page
+  };
   return (
     <div>
-      <div className="news-bg flex gap-11 items-center justify-center max-[600px]:px-6 text-white">
-        <h2 className="text-[30px] font-[500] inter text-[#FAFCFA]">
+      <div className="news-bg flex max-[600px]:flex-col gap-11 max-[600px]:gap-3 items-center justify-center text-white">
+        <h2 className="text-[2rem] font-[500] inter text-[#FAFCFA] max-[600px]:text-[1.4rem]">
           Subscribe to our Newsletter
         </h2>
         <button
@@ -74,7 +84,7 @@ const NewsLetter = () => {
       {/* Subscribe Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-[#E7F0E9] rounded-lg p-6 w-full max-w-[800px] mx-4 lg:mx-0 lg:py-8 lg:px-10 max-h-[90vh] overflow-y-auto">
+          <div className="bg-[#E7F0E9] rounded-lg p-6 w-full max-w-[45rem] mx-4 lg:mx-0 lg:py-8 lg:px-10 max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-start">
               <h2 className="text-2xl font-semibold mb-4">
                 Stay up to date on what’s new!
@@ -96,14 +106,14 @@ const NewsLetter = () => {
                   <div>
                     <input
                       type="text"
-                      className="w-full p-2 border rounded-lg bg-white shadow-md placeholder-[#6B6B6B]"
+                      className="w-full p-2 border rounded-lg bg-white shadow-md placeholder-[#6B6B6B] outline-0"
                       placeholder="Full Name"
                     />
                   </div>
                   <div>
                     <input
                       type="email"
-                      className="w-full p-2 border rounded-lg bg-white shadow-md placeholder-[#6B6B6B]"
+                      className="w-full p-2 border rounded-lg bg-white shadow-md placeholder-[#6B6B6B] outline-0"
                       placeholder="Email"
                       value={email}
                       onChange={handleEmailChange}
@@ -115,7 +125,7 @@ const NewsLetter = () => {
                   <div>
                     <input
                       type="tel"
-                      className="w-full p-2 border rounded-lg bg-white shadow-md placeholder-[#6B6B6B]"
+                      className="w-full p-2 border rounded-lg bg-white shadow-md placeholder-[#6B6B6B] outline-0"
                       placeholder="Phone Number"
                       value={mobile}
                       onChange={handleMobileChange}
@@ -164,6 +174,7 @@ const NewsLetter = () => {
                   </button>
                 </form>
               </div>
+
               {/* Right Side: Image */}
               <div className="w-full lg:w-1/2 mt-6 lg:mt-0 lg:ml-6 max-[1000px]:hidden">
                 <img
@@ -172,6 +183,36 @@ const NewsLetter = () => {
                   className="w-full h-auto rounded-lg"
                 />
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Acknowledgement Modal */}
+      {isAckModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg w-full max-w-[35rem] pb-11 lg:mx-0 max-[600px]:mx-2 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center bg-[#3B715A] p-4 text-white rounded-t-lg">
+              <h2 className="text-xl font-semibold">Thank you!</h2>
+              <button
+                className="text-white text-xl font-bold"
+                onClick={() => setIsAckModalOpen(false)}
+              >
+                X
+              </button>
+            </div>
+            <div className="mt-6">
+              <p className="text-center text-[14px] p-1">
+                You have successfully subscribed to our newsletter.
+              </p>
+            </div>
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={handleBackToHomeClick}
+                className="bg-[#3B715A] text-white px-6 py-2 rounded-lg text-[14px]"
+              >
+                Back to Home
+              </button>
             </div>
           </div>
         </div>
