@@ -3,187 +3,130 @@ import { FaRegUser } from "react-icons/fa";
 
 import { FaPlus, FaMinus } from "react-icons/fa";
 const PeakLoad = ({ formData, errors, handlePeakLoadChange = () => {} }) => {
-  // State to manage multiple field sets
-  const [fieldSets, setFieldSets] = useState(
-    formData?.load?.length > 0
-      ? formData.load
-      : [
-          {
-            id: Date.now(),
-            equipmentName: "",
-            capacity: "",
-            operation: "",
-            equipments: "",
-          },
-        ]
-  );
+ i dailt take carrot and beetroot juice can it use ful for hormonal inbalance
+ChatGPT said:
+ChatGPT
+Yes, drinking carrot and beetroot juice daily can potentially be helpful in managing hormonal imbalance, thanks to the nutrients they contain. Here's how each ingredient can benefit hormonal health:
 
-  // Whenever formData.load changes, update the fieldSets state
-  useEffect(() => {
-    if (Array.isArray(formData.load)) {
-      setFieldSets(formData.load);
-    }
-  }, [formData.load]);
+1. Carrot Juice
+Rich in Vitamin A: Carrots are high in beta-carotene, which the body converts to vitamin A. Vitamin A is crucial for thyroid hormone production and the proper functioning of the endocrine system, which regulates hormones.
+Antioxidant Properties: Carrots contain antioxidants that can help combat oxidative stress, which may affect hormone levels.
+Fiber: Carrots are also a good source of dietary fiber, which supports the detoxification of excess estrogen and promotes hormonal balance, especially in women.
+2. Beetroot Juice
+Rich in Nitrates: Beetroots are high in nitrates, which can improve blood flow and reduce blood pressure. Healthy blood flow is important for the optimal functioning of endocrine glands that produce hormones.
+Iron and Folate: Beets are packed with essential nutrients like iron and folate. Iron is crucial for women’s health, especially during menstruation, and folate supports overall hormonal balance.
+Phytonutrients: Beetroots contain betalains, which have anti-inflammatory properties. Inflammation can disrupt hormone production, so consuming anti-inflammatory foods like beetroot may help.
+Benefits for Hormonal Balance:
+Regulating Estrogen Levels: The fiber in carrots can bind excess estrogen in the digestive tract, reducing estrogen dominance, a common hormonal imbalance issue.
+Supporting the Liver: Both carrots and beets support liver function, which is critical in processing and balancing hormones. The liver helps in detoxifying the body from excess hormones like estrogen and cortisol.
+Improved Energy: The nitrates in beetroot juice can boost energy by increasing blood flow and oxygen to the cells, which can help alleviate symptoms like fatigue that are common in hormonal imbalances.
+Considerations:
+While carrot and beetroot juice can support hormonal health, it’s important to have a well-rounded diet and lifestyle. Ensure you're also managing stress, getting enough sleep, and considering medical advice if you have specific hormone-related issues, like thyroid disorders, PCOS, or menopause-related symptoms.
+In summary, incorporating carrot and beetroot juice into your daily routine can be beneficial for your hormonal health, but it's best combined with a holistic approach.
 
-  // Function to handle adding a new set of fields
-  const addFieldSet = () => {
-    const newFieldSet = {
-      id: Date.now(),
-      equipmentName: "",
-      capacity: "",
-      operation: "",
-      equipments: "",
-    };
-    const updatedFieldSets = [...fieldSets, newFieldSet];
-    setFieldSets(updatedFieldSets);
-    handlePeakLoadChange(updatedFieldSets); // Update the formData.load in the parent
-  };
 
-  // Function to handle removing a set of fields
-  const removeFieldSet = (id) => {
-    const updatedFieldSets = fieldSets.filter((fieldSet) => fieldSet.id !== id);
-    setFieldSets(updatedFieldSets);
-    handlePeakLoadChange(updatedFieldSets); // Update the formData.load in the parent
-  };
 
-  // Function to handle changes in input fields
-  const handleChange = (e, id) => {
-    const { name, value } = e.target;
-    const updatedFieldSets = fieldSets.map((fieldSet) =>
-      fieldSet.id === id ? { ...fieldSet, [name]: value } : fieldSet
-    );
 
-    setFieldSets(updatedFieldSets); // Update local state
-    handlePeakLoadChange(updatedFieldSets); // Update the formData.load in the parent
-  };
 
-  return (
-    <div className="relative">
-      <h2 className="text-[#004A9C] font-[600] text-[16px] text-center p-3">
-        Peak Load
-      </h2>
-      <p className="text-center pb-3 text-[14px]">
-        Please provide a complete list of appliances and their usage
-      </p>
-      {/* Scrollable container */}
-      <div className="scrollable-container relative overflow-y-auto max-h-[500px] pr-[3.8rem] max-[900px]:pr-[1rem]">
-        {fieldSets.map((fieldSet) => (
-          <div
-            key={fieldSet.id}
-            className="flex flex-col gap-5 w-full max-[1000px]:flex-col mb-5 border border-gray-400 rounded-md p-4 relative"
-          >
-            <div className="flex max-[1100px]:flex-col gap-5 w-full max-[1000px]:flex-col">
-              <div className="w-full">
-                <div className="flex items-center border w-full border-[#CDC4B1] rounded-md bg-[#FFFDF9] quote">
-                  <div className="border-r border-r-[#8A6112] p-2">
-                    <FaRegUser className="text-[#8A6112] ml-3" />
-                  </div>
-                  <input
-                    type="text"
-                    name="equipmentName"
-                    value={fieldSet.equipmentName}
-                    onChange={(e) => handleChange(e, fieldSet.id)}
-                    placeholder="Appliance Name"
-                    className="w-full px-4 py-5 font-[400] text-[12px] max-[600px]:text-[8px] rounded-md  shadow-lg placeholder-[#8A6112] outline-none"
-                  />
-                </div>
-                {errors.equipmentName && (
-                  <p className="text-red-500 text-sm mt-1 pl-4">
-                    {errors.equipmentName}
-                  </p>
-                )}
-              </div>
-              <div className="w-full">
-                <div className="flex items-center border w-full border-[#CDC4B1] rounded-md bg-[#FFFDF9] quote">
-                  <div className="border-r border-r-[#8A6112] p-2">
-                    <FaRegUser className="text-[#8A6112] ml-3" />
-                  </div>
-                  <input
-                    type="number"
-                    name="capacity"
-                    value={fieldSet.capacity}
-                   // onChange={(e) => handleChange(e, fieldSet.id)}
-                    onChange={(e) => {
-    // Prevent negative values
-    if (e.target.value >= 0) {
-      handleChange(e, fieldset.id); // Call the existing handleChange function only for non-negative values
-    }
-  }}
-                    placeholder="Watt Capacity"
-                    className="w-full px-4 py-5 text-[12px] max-[600px]:text-[8px] font-[400] rounded-md shadow-sm placeholder-[#8A6112] outline-none focus:outline-none"
-                  />
-                </div>
-                {errors.capacity && (
-                  <p className="text-red-500 text-sm mt-1 pl-4">
-                    {errors.capacity}
-                  </p>
-                )}
-              </div>
-            </div>
 
-            <div className="flex max-[1100px]:flex-col gap-5 w-full max-[1000px]:flex-col">
-              <div className="w-full">
-                <div className="flex items-center border w-full border-[#CDC4B1] rounded-md bg-[#FFFDF9] quote">
-                  <div className="border-r border-r-[#8A6112] p-2">
-                    <FaRegUser className="text-[#8A6112] ml-3" />
-                  </div>
-                  <input
-                    type="number"
-                    name="operation"
-                    value={fieldSet.operation}
-                    onChange={(e) => handleChange(e, fieldSet.id)}
-                    placeholder="Hours of Operation/Day"
-                    className="w-full px-4 py-5 text-[12px] max-[600px]:text-[8px] font-[400] rounded-md shadow-sm placeholder-[#8A6112] outline-none focus:outline-none"
-                  />
-                </div>
-                {errors.operation && (
-                  <p className="text-red-500 text-sm mt-1 pl-4">
-                    {errors.operation}
-                  </p>
-                )}
-              </div>
-              <div className="w-full">
-                <div className="flex items-center border w-full border-[#CDC4B1] rounded-md bg-[#FFFDF9] quote">
-                  <div className="border-r border-r-[#8A6112] p-2">
-                    <FaRegUser className="text-[#8A6112] ml-3" />
-                  </div>
-                  <input
-                    type="number"
-                    name="equipments"
-                    value={fieldSet.equipments}
-                    onChange={(e) => handleChange(e, fieldSet.id)}
-                    placeholder="No. of Equipment"
-                    className="w-full px-4 py-5 text-[12px] max-[600px]:text-[8px] font-[400] rounded-md shadow-sm placeholder-[#8A6112] outline-none focus:outline-none"
-                  />
-                </div>
-                {errors.equipments && (
-                  <p className="text-red-500 text-sm mt-1 pl-4">
-                    {errors.equipments}
-                  </p>
-                )}
-              </div>
-            </div>
+You said:
+fine but when i drink carrot and betrrot juice and when i eat palli chikki why i am getting tired when i feel like my energy was gone ,why?
+ChatGPT said:
+ChatGPT
+If you're feeling tired or experiencing a drop in energy after drinking carrot and beetroot juice or eating palli chikki (peanut brittle), there could be several potential reasons for this reaction. Let’s explore some possibilities:
 
-            {/* Minus button to remove the field set */}
-            <button
-              onClick={() => removeFieldSet(fieldSet.id)}
-              className="absolute -right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 bg-red-500 text-white rounded-full text-xl flex items-center justify-center"
-            >
-              <FaMinus size={14} />
-            </button>
-          </div>
-        ))}
-      </div>
+1. Blood Sugar Fluctuations
+Carrot and beetroot juice: While both are healthy, they contain natural sugars. Drinking a large amount of juice, which lacks fiber compared to eating the whole vegetables, can cause a spike in blood sugar levels followed by a crash. This sudden rise and fall in blood sugar can lead to feelings of fatigue and low energy.
+Palli chikki: Peanut brittle contains peanuts, which are healthy, but it also typically contains sugar or jaggery (gur). Like the juice, consuming a sugar-rich snack can cause a spike in blood sugar followed by a drop, which might leave you feeling tired.
+2. Overconsumption of Simple Carbohydrates
+Both carrot and beetroot juice, as well as palli chikki, are rich in simple carbohydrates (sugars), especially when consumed in concentrated forms (juice and sweets). Simple carbs can provide a quick burst of energy, but they are often followed by a dip in energy, leaving you feeling drained. This is especially true if these foods are consumed without enough protein, healthy fats, or fiber to slow the absorption of sugars into the bloodstream.
+3. Insulin Response
+When you consume sugar-rich foods, your body produces insulin to manage the glucose in your bloodstream. For some people, this can lead to an exaggerated insulin response, causing a rapid drop in blood sugar, which might result in fatigue and low energy shortly after eating or drinking.
+4. Allergies or Sensitivities
+Peanuts in palli chikki: Some people are sensitive or mildly allergic to peanuts, even if they don't experience severe allergic reactions. This sensitivity could manifest as tiredness or lethargy after consumption.
+Oxalates in beets: Beetroots are high in oxalates, which can cause issues for some people, especially those prone to kidney stones. In some cases, this could lead to discomfort or low energy.
+5. Gut Health
+The way your digestive system responds to certain foods could also be a factor. If you have an imbalance in gut bacteria or issues like irritable bowel syndrome (IBS), certain foods (even healthy ones) might cause fatigue or discomfort after eating.
+Palli chikki is rich in fats and can be difficult to digest for some people, leading to sluggishness and a feeling of tiredness.
+6. Iron and Nutrient Absorption
+Although beetroot is a good source of iron, when you consume a large amount of sugar (like in juices or sweet snacks), it can interfere with the absorption of certain nutrients like iron. Poor iron absorption could leave you feeling fatigued, especially if your iron levels are already low.
+7. Timing and Quantity
+If you're consuming these foods at times when your body is not in need of a quick sugar hit (like when you're not physically active), you might experience a crash more easily.
+Also, consuming these in large quantities or on an empty stomach might exacerbate the issue of blood sugar spikes and crashes.
+Suggestions to Avoid Fatigue:
+Combine with protein and fiber: To avoid a sudden spike in blood sugar, try consuming the juice with some protein (e.g., nuts, seeds, or a small amount of yogurt) or fiber (e.g., whole fruits or vegetables) to slow down the absorption of sugars.
+Watch portion sizes: Limit the amount of juice or palli chikki you consume in one sitting to prevent overwhelming your body with sugar.
+Eat whole vegetables: Instead of juice, try eating whole carrots and beetroots, which retain their fiber and help regulate the release of sugar into the bloodstream.
+Check for sensitivities: Pay attention to how you feel after consuming peanuts and beetroots. If the fatigue persists, consider reducing or eliminating them temporarily to see if it makes a difference.
+If the issue continues or worsens, it might be helpful to consult a healthcare provider to check for underlying conditions like blood sugar imbalances, food sensitivities, or nutritional deficiencies.
 
-      {/* Fixed Add Button */}
-      <button
-        onClick={addFieldSet}
-        className="absolute right-0 top-1/2  w-7 h-7 max-[1000px]:right-[-1.5rem] bg-[#0bb68d] text-white rounded-full text-2xl flex items-center justify-center "
-      >
-        <FaPlus size={16} />
-      </button>
-    </div>
-  );
-};
+
+
+
+
+
+You said:
+i have iron defficiency 
+ChatGPT said:
+ChatGPT
+If you have iron deficiency, it makes sense that you might feel fatigued after consuming certain foods like carrot and beetroot juice or palli chikki. Iron is essential for producing hemoglobin, which helps transport oxygen throughout your body. When you’re low in iron, your body may struggle to get enough oxygen to your cells, leading to tiredness and lack of energy.
+
+Why These Foods Might Contribute to Fatigue When You Have Iron Deficiency:
+Beetroot and Iron Deficiency:
+
+While beetroot contains iron, it's non-heme iron (from plant sources), which is less easily absorbed by the body compared to heme iron (from animal sources). Drinking beetroot juice by itself might not provide sufficient iron to combat your deficiency, and without other nutrients to support absorption, it may not have a significant impact.
+Oxalates in beetroot: Beets are high in oxalates, which can inhibit iron absorption. This means that while you’re consuming beetroot for its iron content, the oxalates in the beetroot might be reducing how much iron your body can actually absorb.
+Carrots and Iron Absorption:
+
+Carrots are rich in beta-carotene (Vitamin A), which can support iron absorption. However, if consumed with foods high in sugar or on an empty stomach, it might not provide the desired energy boost.
+Palli Chikki and Sugar:
+
+While peanuts in palli chikki can be a good source of protein, the sugar or jaggery in it might cause a blood sugar spike, followed by a crash. Since fatigue is already a symptom of iron deficiency, this blood sugar crash could amplify your feelings of tiredness.
+How to Manage Iron Deficiency and Avoid Fatigue:
+Here are a few tips to help manage iron deficiency and avoid energy dips:
+
+Consume Vitamin C with Iron-Rich Foods:
+
+Vitamin C enhances the absorption of non-heme iron. Try consuming foods rich in Vitamin C (like citrus fruits, strawberries, bell peppers, or tomatoes) alongside iron-rich foods like beetroot. For example, you could add a squeeze of lemon to your beetroot juice.
+Limit Foods That Inhibit Iron Absorption:
+
+Certain foods like tea, coffee, dairy products, and foods high in calcium or oxalates (like beetroot) can inhibit iron absorption. Try to avoid consuming these right before or after eating iron-rich meals.
+Increase Iron-Rich Foods:
+
+Include more heme iron from animal sources like lean meats, poultry, and fish, which are more easily absorbed by the body. If you're vegetarian, try adding legumes (lentils, beans), tofu, and leafy green vegetables (spinach, kale).
+Balance Blood Sugar:
+
+If you're eating sugar-rich foods like palli chikki, balance them with foods that contain protein and fiber. This helps slow down sugar absorption and prevents the blood sugar spike and crash that can leave you feeling drained. Peanuts (in palli chikki) are a good source of protein, but pairing them with other protein sources (like seeds or nuts) or fiber (like vegetables) can help.
+Consider Iron Supplements:
+
+If your iron deficiency is significant, you might need to take iron supplements, but it’s important to consult your doctor before starting any supplement regimen. They can recommend the right type of iron supplement and dosage for your needs.
+Eat Iron-Rich Foods More Regularly:
+
+Spread out your intake of iron-rich foods throughout the day rather than having a large amount at once. This can help maintain your energy levels more consistently.
+Iron-Rich Foods to Add to Your Diet:
+Heme Iron: Red meat, poultry, fish, liver
+Non-Heme Iron: Lentils, beans, chickpeas, tofu, quinoa, pumpkin seeds, fortified cereals, spinach
+Vitamin C Sources: Oranges, lemons, bell peppers, broccoli, strawberries
+Addressing your iron deficiency through a balanced diet, along with managing blood sugar levels, should help you feel more energized and prevent the tiredness you're experiencing after consuming certain foods.
+
+
+You said:
+is it better to drink taht juice after braekfast
+ChatGPT said:
+ChatGPT
+Yes, it can be better to drink carrot and beetroot juice after breakfast rather than on an empty stomach for several reasons:
+
+1. Improved Iron Absorption:
+Drinking beetroot juice, which contains non-heme iron, after a balanced breakfast (especially one that includes vitamin C-rich foods) can enhance iron absorption. Vitamin C improves the absorption of non-heme iron, and having a full meal with the juice can help with this.
+2. Avoiding Blood Sugar Spikes:
+Carrot and beetroot juice contains natural sugars, and consuming it on an empty stomach might cause a rapid rise in blood sugar followed by a crash, leading to fatigue. Having the juice after breakfast, which should ideally include protein, fiber, and healthy fats, helps slow down sugar absorption, keeping your energy levels stable.
+3. Better Digestion:
+Eating solid food before drinking juice ensures that your digestive system is working optimally, as having juice alone, especially on an empty stomach, can sometimes cause digestive discomfort for some people (like bloating or gas). A balanced breakfast prepares your digestive system for the juice.
+4. Sustained Energy:
+A healthy breakfast helps keep your energy levels steady throughout the morning. Drinking the juice after breakfast provides an additional nutrient boost without risking the tiredness that may come from consuming it on an empty stomach.
+Ideal Timing and Pairing:
+After a balanced breakfast that includes protein (like eggs, yogurt, or legumes) and fiber (whole grains, fruits), you can drink the juice to complement your nutrient intake.
+Pairing the juice with foods rich in vitamin C (like citrus fruits, kiwi, or berries) can enhance iron absorption from the beetroot.
+In summary, drinking the juice after breakfast is likely a better option for maintaining energy, improving iron absorption, and avoiding blood sugar spikes.
 
 export default PeakLoad;
